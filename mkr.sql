@@ -101,7 +101,7 @@ UPDATE course SET name = 'Fullstack developer from zero to master in 5 month', p
 WHERE course_id = 1;
 
 DELETE FROM lesson 
-WHERE lesson_id = 3;
+WHERE lesson_id = 4;
 
 DELETE FROM registration 
 WHERE course_id = 1 AND student_id = 2;
