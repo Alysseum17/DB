@@ -181,7 +181,7 @@ student_progress_percentage AS (
 
 SELECT category, AVG(percentage) AS avg_percentage FROM student_progress_percentage
 GROUP BY category
-ORDER BY avg_percentage DESC
+ORDER BY avg_percentage DESC;
 
 
 SELECT 
