@@ -94,6 +94,10 @@ INSERT INTO course (name, description, price, category, teacher_id)
 VALUES ('Fullstack developer from zero to master', 'HTML, CSS, JavaScript, React, Node.js', 20.99, 'Programming', 1), 
 ('Java for Backend', 'Java basics and Spring framework', 15.99, 'Programming', 2); 
 
+INSERT INTO lesson (name, description, order_in_course, course_id)
+VALUES ('JavaScript Intro', '...', 3, 1), 
+('Java Syntax', '...', 1, 2);
+
 UPDATE lesson SET is_active = false 
 WHERE lesson_id = 3;
 
@@ -226,3 +230,7 @@ INNER JOIN course c ON c.course_id = r.course_id AND c.is_active
 WHERE r.is_finished = false
 GROUP BY scc.student_id, scc.name, scc.username, scc.course_count
 HAVING scc.course_count > 1 AND scc.course_count = COUNT(r.course_id);
+
+
+
+
