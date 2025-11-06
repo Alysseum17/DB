@@ -84,7 +84,8 @@ CREATE TABLE IF NOT EXISTS lesson_progress (
 
 INSERT INTO contact_data (email, phone)
 VALUES ('oleh.p@example.com', '+380501112233'),   
-('anna.k@example.com', '+380672223344');  
+('anna.k@example.com', '+380672223344'),
+('student1@example.com', '+380991112233');
 
 INSERT INTO teacher (username, name, surname, biography, specialization, contact_data_id)
 VALUES ('oleh_dev', 'Олег', 'Петренко', 'Досвідчений Full-Stack розробник з 10-річним стажем.', 'Web Development', 1),  
@@ -97,6 +98,12 @@ VALUES ('Fullstack developer from zero to master', 'HTML, CSS, JavaScript, React
 INSERT INTO lesson (name, description, order_in_course, course_id)
 VALUES ('JavaScript Intro', '...', 3, 1), 
 ('Java Syntax', '...', 1, 2);
+
+INSERT INTO student (username, name, contact_data_id)
+VALUES ('student1_user', 'Студент', 3); 
+
+INSERT INTO registration (student_id, course_id)
+VALUES (1, 1);
 
 UPDATE lesson SET is_active = false 
 WHERE lesson_id = 1;
