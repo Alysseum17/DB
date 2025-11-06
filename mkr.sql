@@ -99,10 +99,10 @@ VALUES ('JavaScript Intro', '...', 3, 1),
 ('Java Syntax', '...', 1, 2);
 
 UPDATE lesson SET is_active = false 
-WHERE lesson_id = 3;
+WHERE lesson_id = 1;
 
 UPDATE course SET name = 'Fullstack developer from zero to master in 5 month', price = 23.99
-WHERE course_id = 1;
+WHERE course_id = 2;
 
 DELETE FROM lesson 
 WHERE lesson_id = 4;
