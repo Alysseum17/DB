@@ -113,7 +113,6 @@ SELECT
     qa.quiz_id,
     COUNT(qa.attempt_id) AS total_attempts,
     MAX(qa.score) AS best_score,
-    -- Підзапит для отримання балу за останню спробу
     (SELECT score 
      FROM quiz_attempts qa2 
      WHERE qa2.user_id = qa.user_id 
