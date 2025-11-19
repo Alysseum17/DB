@@ -5,23 +5,39 @@
 Для підтвердження коректності структури бази даних було визначено функціональні залежності для основних сутностей.
 Позначення: $X \rightarrow Y$ (X однозначно визначає Y).
 
-### Таблиця `users`
+**1. Таблиця `users`**
+* **PK:** `user_id`
+* **FD:** `user_id` $\rightarrow$ `username`, `email`, `avatar_url`, `created_at`, `is_active`
 
-  * **PK:** `user_id`
-  * **FD:** `user_id` $\rightarrow$ `username`, `email`, `avatar_url`, `created_at`
-  * *Висновок:* Усі атрибути залежать безпосередньо від первинного ключа.
+**2. Таблиця `quizes`**
+* **PK:** `quiz_id`
+* **FD:** `quiz_id` $\rightarrow$ `author_id`, `title`, `description`, `time_limit`, `attempts_limit`, `difficulty`, `created_at`, `updated_at`, `is_active`
+* *Примітка:* `author_id` визначає автора, але не навпаки (автор може мати багато квізів), тому залежність йде від `quiz_id`.
 
-### Таблиця `quizes`
+**3. Таблиця `questions`**
+* **PK:** `question_id`
+* **FD:** `question_id` $\rightarrow$ `quiz_id`, `question_text`, `question_type`, `points`, `is_active`
 
-  * **PK:** `quiz_id`
-  * **FD:** `quiz_id` $\rightarrow$ `author_id`, `title`, `description`, `time_limit`, `difficulty`
-  * *Аналіз:* Атрибут `author_id` є зовнішнім ключем. Атрибути вікторини залежать від ID вікторини, а не від автора (один автор може створити багато вікторин з різними назвами). Транзитивних залежностей немає.
+**4. Таблиця `answer_options`**
+* **PK:** `answer_option_id`
+* **FD:** `answer_option_id` $\rightarrow$ `question_id`, `option_text`, `is_correct`
 
-### Таблиця `questions`
+**5. Таблиця `reviews`**
+* **PK:** `review_id`
+* **FD:** `review_id` $\rightarrow$ `user_id`, `quiz_id`, `rating`, `review_text`, `created_at`, `updated_at`
+* *Примітка:* Рейтинг залежить від конкретного відгуку (`review_id`), а не просто від пари "користувач-квіз" (якщо дозволено кілька відгуків, хоча за логікою частіше один, але технічно PK тут `review_id`).
 
-  * **PK:** `question_id`
-  * **FD:** `question_id` $\rightarrow$ `quiz_id`, `question_text`, `question_type`, `points`
-  * *Аналіз:* Текст питання та його тип залежать виключно від ID питання.
+**6. Таблиця `quiz_attempts`**
+* **PK:** `attempt_id`
+* **FD:** `attempt_id` $\rightarrow$ `user_id`, `quiz_id`, `started_at`, `finished_at`, `score`
+
+**7. Таблиця `question_responses`**
+* **PK:** `question_response_id`
+* **FD:** `question_response_id` $\rightarrow$ `attempt_id`, `question_id`, `free_text_answer`, `earned_points`
+
+**8. Таблиця `selected_answers`**
+* **PK:** `(question_response_id, answer_option_id)` (Складений ключ)
+* **FD:** Тривіальна залежність. Весь рядок ідентифікується повним ключем. Неключових атрибутів немає.
 
 -----
 
