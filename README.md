@@ -102,24 +102,25 @@ CREATE TABLE user_quiz_stats (
 DROP TABLE IF EXISTS user_quiz_stats;
 ```
 
-### Крок 2: Створення віртуального представлення (View)
+### Крок 2: Отримання даних через запит
 
-Замість зберігання статичних даних, ми створюємо динамічний запит, який обчислює статистику "на льоту" на основі нормалізованої таблиці `quiz_attempts`.
+Замість звернення до окремої таблиці, для отримання статистики користувача по вікторинах використовується агрегуючий запит. Це гарантує, що ми завжди бачимо актуальні дані без ризику розсинхронізації.
+
+**SQL-запит для отримання статистики (приклад використання):**
 
 ```sql
-CREATE OR REPLACE VIEW user_quiz_stats_view AS
 SELECT 
     qa.user_id,
     qa.quiz_id,
     COUNT(qa.attempt_id) AS total_attempts,
     MAX(qa.score) AS best_score,
+    MAX(qa.finished_at) AS last_attempt_date,
     (SELECT score 
      FROM quiz_attempts qa2 
      WHERE qa2.user_id = qa.user_id 
        AND qa2.quiz_id = qa.quiz_id 
      ORDER BY started_at DESC 
-     LIMIT 1) AS last_score,
-    MAX(qa.finished_at) AS last_attempt_date
+     LIMIT 1) AS last_score
 FROM quiz_attempts qa
 GROUP BY qa.user_id, qa.quiz_id;
 ```
